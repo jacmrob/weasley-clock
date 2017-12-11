@@ -40,6 +40,26 @@ class User(BaseModel):
         return {"apple_id": self.apple_id,
                 "first_name": self.first_name,
                 "last_name": self.last_name,
+                "password": self.password,
                 "work": self.work,
                 "home": self.home,
                 "school": self.school}
+
+
+class UserLocations(BaseModel):
+    __tablename__ = 'userLocations'
+    id = db.Column(db.Integer, primary_key=True)
+    apple_id = db.Column(db.String(300))
+    device = db.Column(db.String(300))
+    home = db.Column(db.Boolean)
+    work = db.Column(db.Boolean)
+    school = db.Column(db.Boolean)
+
+    # TODO: add more clock hands
+
+    def __init__(self, apple_id, device):
+        self.apple_id = apple_id
+        self.device = device
+        self.home = False
+        self.work = False
+        self.school = False

@@ -28,9 +28,28 @@ def api_health():
     return 'Service running!', 200
 
 
-@app.route('/register', methods=['POST'])
-def api_register():
+@app.route('/registerPage')
+def show_register_page():
     return render_template('register.html')
+
+
+@app.route('/registerUser', methods=['POST'])
+def register_user():
+    user = User(apple_id=request.form['email'],
+                first_name=request.form['first-name'],
+                last_name=request.form['last-name'],
+                password=request.form['password'],
+                work=request.form['work'],
+                home=request.form['home'],
+                school=request.form['school'])
+
+    try:
+        db.session.add(user)
+        db.session.commit()
+        return "Success!", 201
+    except:
+        e = sys.exc_info()[0]
+        return str(e), 500
 
 
 if __name__ == '__main__':

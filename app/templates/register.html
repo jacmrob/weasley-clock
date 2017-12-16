@@ -1,34 +1,60 @@
-<form action="/action_page.php">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Weasley Clock</title>
+ 
+    
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/css/cerulean.css" rel="stylesheet">
+    
+  </head>
+ {% block body %}
+  <body>
+ 
     <div class="container">
-        <label><b>Email</b></label>
-        <input type="text" placeholder="Enter Email" name="email" required>
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href={{ url_for('login') }}>Sign In</a></li>
+            <li role="presentation" class="active"><a href={{ url_for('register') }}>Sign Up</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Weasley Clock</h3>
+      </div>
+ 
+      <div class="jumbotron">
+        <h1>Sign Up</h1>
+        <form class="form-signup">
+        <label for="first-name" class="sr-only">First Name</label>
+        <input type="name" name="first-name" id="first-name" class="form-control" placeholder="First Name" required autofocus>
+        <label for="last-name" class="sr-only">Last Name</label>
+        <input type="name" name="last-name" id="last-name" class="form-control" placeholder="Last Name" required autofocus>
+        <label for="home" class="sr-only">Home Address</label>
+        <input type="name" name="home" id="home" class="form-control" placeholder="Home Address" required autofocus>
 
-        <label><b>First Name</b></label>
-        <input type="text" placeholder="Enter First Name" name="first-name" required>
+        <label for="work" class="sr-only">Work Address</label>
+        <input type="name" name="work" id="work" class="form-control" placeholder="Work Address" required autofocus>
 
-        <label><b>Last Name</b></label>
-        <input type="text" placeholder="Enter Last Name" name="last-name" required>
+        <label for="school" class="sr-only">School Address</label>
+        <input type="name" name="school" id="school" class="form-control" placeholder="School Address" required autofocus>
 
-        <label><b>Work</b></label>
-        <input type="text" placeholder="Enter Work address" name="work" required>
+        <label for="email" class="sr-only">Email address</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
 
-        <label><b>Home</b></label>
-        <input type="text" placeholder="Enter Home address" name="home" required>
-
-        <label><b>School</b></label>
-        <input type="text" placeholder="Enter School address" name="school" required>
-
-        <label><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-
-        <label><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
-        <input type="checkbox" checked="checked"> Remember me
-        <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
-
-        <div class="clearfix">
-            <button type="button"  class="cancelbtn">Cancel</button>
-            <button type="submit" class="signupbtn">Sign Up</button>
-        </div>
+        <script src="../static/js/jquery-1.10.1.min.js"></script>
+        <script src="../static/js/signUp.js"></script>
+        <button id="btnSignUp" class="btn btn-lg btn-primary btn-block" type="button">Sign up</button>
+      </form>
+      </div>
+ 
+      <footer class="footer">
+        <p>&copy; cepha-code 2017</p>
+      </footer>
+ 
     </div>
-</form>
+  </body>
+{% endblock %}

@@ -5,3 +5,4 @@ Flask-Migrate==1.8.0
 flasgger
 pyicloud
 click
+backports.pbkdf2==0.1

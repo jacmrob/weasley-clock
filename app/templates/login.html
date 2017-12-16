@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Weasley Clock</title>
+ 
+    
+    <link href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="../static/css/cerulean.css" rel="stylesheet">
+    
+  </head>
+ {% block body %}
+
+ <body>
+ 
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href="login">Sign In</a></li>
+            <li role="presentation" class="active"><a href="register">Sign Up</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Weasley Clock</h3>
+      </div>
+ 
+      <div class="jumbotron">
+        <h1>Login</h1>
+        <form class="form-signup">
+        <label for="email" class="sr-only">Email address</label>
+        <input type="email" name="email" id="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
+
+        <script src="../static/js/jquery-1.10.1.min.js"></script>
+        <script src="../static/js/signIn.js"></script>
+        <button id="btnSignIn" class="btn btn-lg btn-primary btn-block" type="button">Login</button>
+      </form>
+      </div>
+
+      <div>
+      	<h1>Don't have an account?</h1>
+      	<a href={{ url_for('register') }}>Sign Up!</a>
+      </div>
+ 
+      <footer class="footer">
+        <p>&copy; cepha-code 2017</p>
+      </footer>
+ 
+    </div>
+  </body>
+
+ {% endblock %}

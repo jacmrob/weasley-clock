@@ -3,6 +3,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from random import SystemRandom
 from backports.pbkdf2 import pbkdf2_hmac, compare_digest
 import json
+from flask.ext.login import UserMixin
 
 db = SQLAlchemy()
 
@@ -11,7 +12,7 @@ class BaseModel(db.Model):
     __abstract__ = True
 
 
-class User(BaseModel):
+class User(UserMixin, BaseModel):
     """Model for users table"""
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -35,7 +36,6 @@ class User(BaseModel):
     # hashed and salted in our database we use a descriptor
     # here which will automatically hash our password
     # when we provide it (i. e. user.password = "12345")
-    #@password.setter
     def set_password(self, value):
         # When a user is first created, give them a salt
         if self._salt is None:
@@ -60,7 +60,7 @@ class User(BaseModel):
         buff = pbkdf2_hmac("sha512", pwd, salt, iterations=100000)
         return bytes(buff)
 
-    def __init__(self, apple_id, password, first_name, last_name, work, home, school):
+    def __init__(self, apple_id, password, first_name, last_name, work, home, school, active=True):
         self.apple_id = apple_id
         self.first_name = first_name
         self.last_name = last_name
@@ -68,6 +68,7 @@ class User(BaseModel):
         self.home = home
         self.school = school
         self.set_password(password)
+        self.is_active = active
 
     def __repr__(self):
         return '<apple_id {0}, first_name {1}, last_name {2}, work {3}, home {4}, school {5}>'.\
@@ -81,6 +82,9 @@ class User(BaseModel):
                 "work": self.work,
                 "home": self.home,
                 "school": self.school}
+
+    def is_active():
+        return self.is_active
 
 
 class UserLocations(BaseModel):

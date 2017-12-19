@@ -6,3 +6,4 @@ flasgger
 pyicloud
 click
 backports.pbkdf2==0.1
+flask-login

@@ -6,7 +6,7 @@ $(function() {
             data: $('form').serialize(),
             type: 'POST',
             success: function (response) {
-                window.location.href = '/dashboard/Jackie';
+                window.location.href = '/dashboard';
             },
             error: function(error) {
                 console.log(error);

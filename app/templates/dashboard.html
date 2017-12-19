@@ -12,13 +12,25 @@
   </head>
  {% block body %}
   <body>
+    <div class="container">
+      <div class="header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation"><a href={{ url_for('logout') }}>Sign Out</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Weasley Clock</h3>
+      </div>
+
     <div>
-  	  <h1>Welcome!</h1>
+  	  <h1>Welcome {{current_user.first_name}}!</h1>
+      <p>This is your homepage</p>
     </div>
 
     <footer class="footer">
         <p>&copy; cepha-code 2017</p>
     </footer>
+  </div>
   </body>
 
   {% endblock %}

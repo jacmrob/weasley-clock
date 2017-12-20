@@ -86,6 +86,11 @@ class User(UserMixin, BaseModel):
     def is_active():
         return self.is_active
 
+    def set_all_with_kwargs(self, **kwargs):
+        for key, value in kwargs.items():
+            if value:
+                setattr(self, key, value)
+
 
 class UserLocations(BaseModel):
     __tablename__ = 'userLocations'

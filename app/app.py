@@ -2,12 +2,14 @@ from flask import Flask, request, flash, jsonify, render_template, url_for, redi
 import json
 import sys
 import random
-from sqlalchemy import exc
+from sqlalchemy import exc, func
+from sqlalchemy import func as sqlfunc
 from flasgger import Swagger
 from flask.ext.login import LoginManager, login_required, login_user, logout_user, current_user
 import uuid
 
 from models import db, User
+from clock import clock
 
 app = Flask(__name__)
 Swagger(app)
@@ -24,18 +26,14 @@ def load_user(user_id):
     return User.query.get(user_id)
 
 
-def validate_user(email, password):
-    print "attempting to validate user {0}".format(email)
-    user = User.query.filter(User.apple_id == email).first()
+def edit_user(user, **fields):
+    user.set_all_with_kwargs(**fields)
+    db.session.commit()
 
-    if not user:
-        flash("No user found with email!")
-        #raise StandardError("No user found with email {0}!".format(email))
-    if not user.is_valid_password(password):
-        flash("Invalid password")
-        #raise StandardError("Invalid password")
-    return user
-    
+
+def load_family(user):
+    family_members = User.query.filter(sqlfunc.lower(User.last_name) == sqlfunc.lower(user.last_name).lower)
+    return family_members
 
 
 @app.route('/')
@@ -45,17 +43,12 @@ def login():
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
-        
-        
         user = User.query.filter(User.apple_id == email).first()
-        print user 
         if not user:
-            print "no user"
             error = "No user was found with that email!"
         elif not user.is_valid_password(password):
             error = "Invalid password!"
         else:
-            print "here"
             login_user(user)
             return redirect(url_for('dashboard'))
         # except:
@@ -64,7 +57,6 @@ def login():
         #     return render_template('error.html', error_string=e)
     print "rendering.."
     return render_template('login.html', error=error)
-
     
 
 
@@ -99,7 +91,25 @@ def register():
 @app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
+    #fam = load_family(current_user)
+    #print fam
     return render_template('dashboard.html')
+
+
+@app.route('/dashboard/edit', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+    if request.method == 'POST':
+        try:
+            edit_user(current_user, home=request.form['home'], work=request.form['work'], school=request.form['school'])
+            return redirect(url_for('dashboard'))
+        except:
+            e = sys.exc_info()[0]
+            print str(e)
+            return render_template('error.html', error_string=str(e))
+
+    return render_template('edit_profile.html')
+
 
 @app.route('/logout')
 @login_required

@@ -17,6 +17,7 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation"><a href={{ url_for('logout') }}>Sign Out</a></li>
+            <li role="presentation"><a href={{ url_for('edit_profile') }}>Edit Profile</a></li>
           </ul>
         </nav>
         <h3 class="text-muted">Weasley Clock</h3>
@@ -24,7 +25,10 @@
 
     <div>
   	  <h1>Welcome {{current_user.first_name}}!</h1>
-      <p>This is your homepage</p>
+      <p>This is your homepage.</p>
+      <p>Work: {{current_user.work}}</p>
+      <p>Home: {{current_user.home}}</p>
+      <p>School: {{current_user.school}}</p>
     </div>
 
     <footer class="footer">
